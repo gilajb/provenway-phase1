@@ -1,0 +1,191 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-md);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sidebar,
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.card {
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.main .card {
+  align-items: stretch;
+  text-align: left;
+}
+
+.name {
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-headline-sm);
+  font-weight: var(--font-weight-headline-sm);
+  line-height: var(--line-height-headline-sm);
+  color: var(--color-on-surface);
+}
+
+.headline {
+  margin-top: 2px;
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.verifiedRow {
+  margin-top: var(--space-xs);
+}
+
+.editButton {
+  margin-top: var(--space-sm);
+  width: 100%;
+}
+
+.buttonContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.metaList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-outline-variant);
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.metaRow svg {
+  flex-shrink: 0;
+  color: var(--color-secondary);
+}
+
+.section {
+  width: 100%;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-outline-variant);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.sectionLabel {
+  align-self: flex-start;
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-label-sm);
+  letter-spacing: var(--letter-spacing-label-sm);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  margin-bottom: var(--space-xs);
+}
+
+.bio {
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-on-surface);
+  white-space: pre-wrap;
+}
+
+.emptyBio {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+  font-style: italic;
+}
+
+.comingSoonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+@media (max-width: 720px) {
+  .comingSoonGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Error state ─────────────────────────────────────────────────────── */
+.errorState {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+  border-radius: var(--radius-default);
+  max-width: 480px;
+}
+
+/* ── Skeleton loading state ──────────────────────────────────────────── */
+.skeletonCard {
+  align-items: stretch;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-container-high) 25%,
+    var(--color-surface-container) 37%,
+    var(--color-surface-container-high) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-default);
+}
+
+.skeletonAvatar {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  align-self: center;
+}
+
+.skeletonLine {
+  height: 14px;
+  margin-top: var(--space-sm);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}

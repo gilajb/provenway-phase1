@@ -1,0 +1,98 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  position: relative;
+  margin: 0;
+  padding-left: var(--space-md);
+}
+
+/* The connecting vertical line — DESIGN.md: "Vertical lines (2px,
+   #B4B2A9) with solid primary blue circles for completed steps." */
+.list::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 8px;
+  bottom: 8px;
+  width: var(--timeline-line-width);
+  background: var(--timeline-line-color);
+}
+
+.loadMore {
+  margin-top: var(--space-sm);
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+  color: var(--color-on-surface-variant);
+  border: 1px dashed var(--color-outline-variant);
+  border-radius: var(--radius-md);
+}
+
+.empty svg {
+  color: var(--color-secondary);
+}
+
+.empty p {
+  font-size: var(--font-size-body-sm);
+  max-width: 320px;
+}
+
+/* ── Error state ─────────────────────────────────────────────────────── */
+.errorState {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+  border-radius: var(--radius-default);
+  font-size: var(--font-size-body-sm);
+}
+
+/* ── Skeleton loading state ──────────────────────────────────────────── */
+.skeletonItem {
+  position: relative;
+  list-style: none;
+  padding-left: var(--space-md);
+  padding-bottom: var(--space-md);
+  display: flex;
+}
+
+.skeletonMarker {
+  position: absolute;
+  left: -6px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container-high);
+}
+
+.skeletonCard {
+  width: 100%;
+  height: 88px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-container-high) 25%,
+    var(--color-surface-container) 37%,
+    var(--color-surface-container-high) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}

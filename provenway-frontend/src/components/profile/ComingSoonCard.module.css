@@ -1,0 +1,49 @@
+.card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--color-outline-variant);
+  background: var(--color-surface-container-low);
+  overflow: hidden;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Subtle blueprint grid texture — DESIGN.md: "blueprint grid pattern when
+   no image is present, maintaining the architectural aesthetic." */
+.blueprint {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-surface-blue) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-surface-blue) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.5;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.icon {
+  color: var(--color-secondary);
+}
+
+.title {
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-on-surface);
+}
+
+.description {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+  max-width: 280px;
+}

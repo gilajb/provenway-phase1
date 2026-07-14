@@ -1,0 +1,33 @@
+name: Deploy
+
+# Fires when the CI workflow finishes running on main.
+# IMPORTANT: this only works if your ci.yml has `name: CI` at the top —
+# the "workflows:" list below is matched by that name, not by filename.
+# If your ci.yml uses a different `name:`, update the value below to match.
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Trigger Render deploy
+    runs-on: ubuntu-latest
+    # Only deploy if CI actually passed (not on failure/cancellation),
+    # and only for the workflow_run that was itself triggered by a push to main.
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push'
+    steps:
+      - name: Call Render deploy hook
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "RENDER_DEPLOY_HOOK_URL secret is not set. Add it in GitHub repo Settings > Secrets and variables > Actions." >&2
+            exit 1
+          fi
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"

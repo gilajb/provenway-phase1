@@ -1,0 +1,22 @@
+# Environments
+.env
+.env.*
+!.env.example
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

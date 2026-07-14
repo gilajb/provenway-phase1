@@ -1,0 +1,106 @@
+.item {
+  position: relative;
+  list-style: none;
+  padding-left: var(--space-md);
+  padding-bottom: var(--space-md);
+}
+
+.item:last-child {
+  padding-bottom: 0;
+}
+
+/* Solid circle marker with a soft halo — DESIGN.md's timeline element
+   (solid primary-blue circles for completed steps), with the halo
+   echoing the mockup's ring-4 ring-primary/10 treatment via the
+   design's blue-tinted secondary surface token. */
+.marker {
+  position: absolute;
+  left: -6px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--timeline-dot-complete);
+  border: 3px solid var(--color-surface-container-lowest);
+  box-shadow: 0 0 0 4px var(--color-surface-blue);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+@media (min-width: 640px) {
+  .row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.geotag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-label-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.title {
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  letter-spacing: var(--letter-spacing-label-md);
+  color: var(--color-primary);
+}
+
+.body {
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.body :global(p) {
+  margin-bottom: 6px;
+}
+
+.body :global(p:last-child) {
+  margin-bottom: 0;
+}
+
+.posted {
+  font-size: var(--font-size-label-sm);
+  color: var(--color-outline);
+}
+
+/* DESIGN.md-referenced date pill: "font-label-sm text-outline px-2 py-1
+   bg-surface-container rounded" — same treatment used for the
+   milestones panel's completion dates. */
+.dateBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  flex-shrink: 0;
+  padding: 3px var(--space-xs);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-container);
+  color: var(--color-outline);
+  font-size: var(--font-size-label-sm);
+  white-space: nowrap;
+}

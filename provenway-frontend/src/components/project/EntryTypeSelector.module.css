@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-on-surface);
+  letter-spacing: var(--letter-spacing-label-md);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-surface-container-low);
+  color: var(--color-on-surface-variant);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  letter-spacing: var(--letter-spacing-label-md);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.option:hover {
+  border-color: var(--color-outline);
+  color: var(--color-on-surface);
+}
+
+/* Selected treatment mirrors DESIGN.md's "in progress" milestone tile:
+   soft blue fill + tinted border + primary text, rather than a solid
+   fill — keeps multiple chips scannable at once. */
+.option.selected {
+  background: var(--color-surface-blue);
+  border-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.error {
+  font-size: var(--font-size-label-sm);
+  color: var(--color-error);
+}

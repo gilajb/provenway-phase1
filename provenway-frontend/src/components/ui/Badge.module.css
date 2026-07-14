@@ -1,0 +1,35 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-label-sm);
+  letter-spacing: var(--letter-spacing-label-sm);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.default {
+  background: var(--color-surface-container-high);
+  color: var(--color-on-surface-variant);
+}
+
+/* Teal — verified professionals, completed milestones */
+.success {
+  background: var(--color-success-container);
+  color: var(--color-success);
+}
+
+/* Blue — primary discipline tags, plan tiers */
+.primary {
+  background: var(--color-surface-blue);
+  color: var(--color-secondary);
+}
+
+/* Gray — secondary info, statuses */
+.muted {
+  background: var(--color-surface-container-highest);
+  color: var(--color-on-surface-variant);
+}

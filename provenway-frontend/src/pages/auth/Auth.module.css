@@ -1,0 +1,148 @@
+/**
+ * Shared styles for all auth pages (Login, Register, ForgotPassword,
+ * ResetPassword, VerifyEmail). Field/input styling itself lives in the
+ * shared Input/Button components — this file is layout only, and uses
+ * nothing but src/styles/tokens.css.
+ */
+
+.header {
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-size: var(--font-size-headline-md);
+  font-weight: var(--font-weight-headline-md);
+  line-height: var(--line-height-headline-md);
+  color: var(--color-on-surface);
+}
+
+.subtitle {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.errorBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+  border-radius: var(--radius-default);
+  font-size: var(--font-size-body-sm);
+  margin-top: var(--space-sm);
+}
+
+.errorBanner svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.forgotRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.forgotLink {
+  font-size: var(--font-size-label-sm);
+  color: var(--color-secondary);
+}
+
+.linksRow {
+  margin-top: var(--space-md);
+  text-align: center;
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.linksRow a {
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-body-sm);
+  color: var(--color-secondary);
+  margin-top: var(--space-md);
+}
+
+/* ── Status states (success / error / verifying) ─────────────────────── */
+
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.successIcon,
+.errorIcon {
+  width: var(--space-xl);
+  height: var(--space-xl);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-xs);
+}
+
+.successIcon {
+  background: var(--color-success-container);
+  color: var(--color-success);
+}
+
+.errorIcon {
+  background: var(--color-error-container);
+  color: var(--color-error);
+}
+
+.successTitle {
+  font-size: var(--font-size-headline-sm);
+  font-weight: var(--font-weight-headline-sm);
+  color: var(--color-on-surface);
+}
+
+.successText {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+  max-width: 320px;
+}
+
+.successActions {
+  width: 100%;
+  margin-top: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.centerState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0;
+}
+
+.spinnerIcon {
+  color: var(--color-primary);
+  animation: auth-spin 0.6s linear infinite;
+}
+
+@keyframes auth-spin {
+  to { transform: rotate(360deg); }
+}

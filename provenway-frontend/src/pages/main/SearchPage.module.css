@@ -1,0 +1,328 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ── Header / "Discovery Terminal" search block ─────────────────────────
+   Per DESIGN.md: "Subtle blueprint-inspired patterns... are used sparingly
+   in headers and empty states." Fine light-blue grid lines over a bordered,
+   rounded container. */
+.header {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-outline-variant);
+  background: var(--color-surface-container-low);
+  padding: var(--space-lg) var(--space-md);
+}
+
+.blueprint {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-surface-blue) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-surface-blue) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.headerContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 760px;
+}
+
+.title {
+  font-size: var(--font-size-headline-lg);
+  font-weight: var(--font-weight-headline-lg);
+  line-height: var(--line-height-headline-lg);
+  letter-spacing: var(--letter-spacing-headline-lg);
+  color: var(--color-primary);
+}
+
+.subtitle {
+  margin-top: -6px;
+  font-size: var(--font-size-body-md);
+  color: var(--color-on-surface-variant);
+}
+
+/* ── Search bar ──────────────────────────────────────────────────────── */
+.searchBar {
+  margin-top: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-level-2);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.searchIcon {
+  flex-shrink: 0;
+  color: var(--color-outline);
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-md);
+  color: var(--color-on-surface);
+  padding: var(--space-xs) 0;
+}
+
+.searchInput::placeholder {
+  color: var(--color-on-surface-variant);
+  opacity: 0.7;
+}
+
+/* ── Filter row (pill filters) ──────────────────────────────────────── */
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.locationFilter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+}
+
+.locationIcon {
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.locationInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-label-md);
+  color: var(--color-on-surface);
+  width: 140px;
+}
+
+.locationInput::placeholder {
+  color: var(--color-on-surface-variant);
+  opacity: 0.8;
+}
+
+.verifiedToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-full);
+  padding: 7px 14px;
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-on-surface-variant);
+  transition: background var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.verifiedToggle:hover {
+  border-color: var(--color-outline);
+  color: var(--color-on-surface);
+}
+
+.verifiedToggleActive {
+  background: var(--color-success-container);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.clearFilters {
+  background: none;
+  border: none;
+  padding: 7px 6px;
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
+
+.clearFilters:hover {
+  color: var(--color-primary);
+}
+
+.disciplineFilter {
+  margin-top: 2px;
+}
+
+/* ── Results grid ────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  transition: opacity var(--transition-fast);
+}
+
+.gridFetching {
+  opacity: 0.6;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .locationInput {
+    width: 100px;
+  }
+}
+
+/* ── Pagination ──────────────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.pageBtnContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageStatus {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+}
+
+/* ── Error state ─────────────────────────────────────────────────────── */
+.errorState {
+  padding: var(--space-md);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+  border-radius: var(--radius-default);
+}
+
+/* ── Loading skeleton ────────────────────────────────────────────────── */
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-md);
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-container-high) 25%,
+    var(--color-surface-container) 37%,
+    var(--color-surface-container-high) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-default);
+}
+
+.skeletonAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.skeletonLine {
+  height: 12px;
+  margin-top: var(--space-xs);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/* ── Empty state (blueprint-grid placeholder, per DESIGN.md) ───────────── */
+.emptyState {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--color-outline-variant);
+  background: var(--color-surface-container-low);
+}
+
+.emptyBlueprint {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-surface-blue) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-surface-blue) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+
+.emptyContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.emptyIcon {
+  color: var(--color-secondary);
+}
+
+.emptyTitle {
+  font-size: var(--font-size-headline-sm);
+  font-weight: var(--font-weight-headline-sm);
+  color: var(--color-on-surface);
+}
+
+.emptyDescription {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+  max-width: 320px;
+}
+
+.emptyClearButton {
+  margin-top: var(--space-xs);
+}

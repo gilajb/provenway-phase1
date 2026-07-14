@@ -1,0 +1,200 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  /* Comfortable reading width for a card feed — center column of the
+     design reference's 12-col grid, not the full AppLayout content
+     width (see FeedPage.jsx scope note). */
+  max-width: 640px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.subtitle {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ── Inline "loading more" indicator (subsequent pages) ─────────────────── */
+
+.inlineLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) 0;
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-outline-variant);
+  border-top-color: var(--color-secondary);
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.endOfFeed {
+  text-align: center;
+  padding: var(--space-sm) 0;
+  font-size: var(--font-size-body-sm);
+  color: var(--color-outline);
+}
+
+/* ── Error state ──────────────────────────────────────────────────────── */
+
+.errorState {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-error-container);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-size: var(--font-size-body-sm);
+}
+
+/* ── Empty state — same blueprint-grid treatment as SearchPage.module.css,
+   with the CTA pointed at Discovery instead of "clear filters". ────────── */
+
+.emptyState {
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--color-outline-variant);
+  background: var(--color-surface-container-low);
+}
+
+.emptyBlueprint {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-surface-blue) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-surface-blue) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+
+.emptyContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.emptyIcon {
+  color: var(--color-secondary);
+}
+
+.emptyTitle {
+  font-size: var(--font-size-headline-sm);
+  font-weight: var(--font-weight-headline-sm);
+  color: var(--color-on-surface);
+}
+
+.emptyDescription {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+  max-width: 360px;
+}
+
+.emptyCta {
+  margin-top: var(--space-xs);
+}
+
+/* ── Loading skeleton (initial load) ─────────────────────────────────────── */
+
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-md);
+}
+
+.skeletonHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.skeletonHeaderLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-container-high) 25%,
+    var(--color-surface-container) 50%,
+    var(--color-surface-container-high) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.skeletonLine {
+  height: 12px;
+}
+
+.skeletonBlock {
+  height: 180px;
+  border-radius: var(--radius-md);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,61 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-container) 100%
+  );
+  box-shadow: var(--shadow-level-1);
+}
+
+.blueprint {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.content {
+  position: relative;
+  padding: var(--space-lg) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.title {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-headline-lg-mobile);
+  font-weight: var(--font-weight-headline-lg-mobile);
+  line-height: var(--line-height-headline-lg-mobile);
+  color: var(--color-on-primary);
+}
+
+@media (min-width: 640px) {
+  .title {
+    font-size: var(--font-size-headline-lg);
+    font-weight: var(--font-weight-headline-lg);
+    line-height: var(--line-height-headline-lg);
+    letter-spacing: var(--letter-spacing-headline-lg);
+  }
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-body-md);
+}
+

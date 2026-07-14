@@ -1,0 +1,61 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  margin-bottom: var(--space-sm);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+  border-radius: var(--radius-default);
+  font-size: var(--font-size-body-sm);
+}
+
+/* ── Photos ──────────────────────────────────────────────────────────────
+   Wrapped in its own low-emphasis card, echoing the grouped-panel
+   treatment DESIGN.md uses for sidebar/metadata sections (soft
+   surface-container-low fill, 1px card border). */
+.photoSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  background: var(--color-surface-container-low);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-md);
+}
+
+.photoHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.photoLabel {
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-on-surface);
+  letter-spacing: var(--letter-spacing-label-md);
+}
+
+.photoCount {
+  font-size: var(--font-size-label-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+}
+
+@media (max-width: 420px) {
+  .photoGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

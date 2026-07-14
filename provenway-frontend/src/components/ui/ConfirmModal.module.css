@@ -1,0 +1,17 @@
+.body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--color-error);
+  margin-top: 2px;
+}
+
+.description {
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-on-surface-variant);
+}

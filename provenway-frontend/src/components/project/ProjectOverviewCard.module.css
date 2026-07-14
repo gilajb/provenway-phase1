@@ -1,0 +1,74 @@
+.card {
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-md);
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-headline-sm);
+  font-weight: var(--font-weight-headline-sm);
+  line-height: var(--line-height-headline-sm);
+  color: var(--color-on-surface);
+}
+
+.heading svg {
+  color: var(--color-primary);
+}
+
+.description {
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-on-surface-variant);
+  white-space: pre-wrap;
+}
+
+.noDescription {
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-body-md);
+  color: var(--color-outline);
+  font-style: italic;
+}
+
+.statGrid {
+  margin-top: var(--space-md);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xs);
+}
+
+@media (min-width: 640px) {
+  .statGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat {
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-surface-container-low);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-md);
+}
+
+.statLabel {
+  font-size: 10px;
+  font-weight: var(--font-weight-label-md);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label-sm);
+  color: var(--color-on-surface-variant);
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

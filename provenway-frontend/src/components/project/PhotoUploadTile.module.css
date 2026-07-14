@@ -1,0 +1,86 @@
+.addTile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-outline-variant);
+  background: var(--color-surface-container-low);
+  color: var(--color-secondary);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.addTile:hover {
+  border-color: var(--color-secondary);
+  background: var(--color-surface-blue);
+}
+
+.addTile[data-disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* DESIGN.md: "Project Imagery Holders: High-fidelity placeholders that
+   use a subtle blueprint grid pattern when no image is present." */
+.blueprintGrid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--timeline-line-color) 0.5px, transparent 0.5px);
+  background-size: 12px 12px;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.addIcon {
+  position: relative;
+}
+
+.addLabel {
+  position: relative;
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-label-md);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.previewTile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-card-border);
+}
+
+.previewTile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: rgba(27, 28, 26, 0.65);
+  color: var(--color-inverse-on-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+}
+
+.removeBtn:hover {
+  background: rgba(27, 28, 26, 0.85);
+}
