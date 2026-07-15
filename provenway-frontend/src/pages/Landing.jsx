@@ -9,6 +9,7 @@
  * bounced straight to /feed, unless ?preview=1 is present (QA/design checks).
  */
 import { Navigate, Link, useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArrowRight,
   Camera,
@@ -17,17 +18,16 @@ import {
   ShieldCheck,
   TrendingUp,
   Users,
-  MapPin,
-  FileText,
-  Star,
-  CheckCircle2,
   ExternalLink,
   Globe,
   Share2,
 } from "lucide-react";
 import Button from "../components/ui/Button";
 import LinkButton from "../components/ui/LinkButton";
+import ComingSoonCard from "../components/profile/ComingSoonCard";
 import { useAuth } from "../hooks/useAuth";
+import { apiClient } from "../lib/api/apiClient";
+import { USERS } from "../lib/api/endpoints";
 import styles from "./Landing.module.css";
 
 const NAV_LINKS = ["Explore", "Solutions", "Firms", "Pricing"];
@@ -71,34 +71,6 @@ const BENEFITS = [
   },
 ];
 
-const PROFESSIONALS = [
-  { name: "Marcus Thorne", role: "Lead Architect, Structura", tags: ["STEEL", "CAD", "PM"] },
-  { name: "Elena Rodriguez", role: "Senior PM, Vanguard Group", tags: ["SITE OPS", "BIM", "SAFETY"] },
-  { name: "David Chen", role: "Structural Engineer", tags: ["CONCRETE", "SEISMIC"] },
-  { name: "Sarah Jenkins", role: "Interior Designer, ARC-WEST", tags: ["FINISHES", "LIGHTING", "3D"] },
-];
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "Provenway has changed the way I interview. Instead of just talking about my experience, I can show a verified history of every major project I've touched.",
-    name: "Robert Hall",
-    role: "Senior Site Superintendent",
-  },
-  {
-    quote:
-      "For our firm, Provenway is the gold standard for quality control. We can monitor progress across 20 sites in real time with verified visual data.",
-    name: "Linda Zhao",
-    role: "Director of Operations, ARC-WEST",
-  },
-  {
-    quote:
-      "The transparency this platform provides to our clients is unmatched. It builds trust from day one of the construction phase.",
-    name: "Jameson Burke",
-    role: "Lead Project Architect",
-  },
-];
-
 const FOOTER_COLUMNS = [
   {
     heading: "Product",
@@ -118,12 +90,20 @@ const FOOTER_COLUMNS = [
   },
 ];
 
-const TRUST_LOGOS = ["STRUCTURA", "ARC-WEST", "BUILD-PRO", "MERIDIAN", "VANGUARD"];
-
 export default function Landing() {
   const { isAuthenticated, isHydrating } = useAuth();
   const [searchParams] = useSearchParams();
   const isPreview = searchParams.get("preview") === "1";
+
+  // Live count, not a marketing round-number — GET /users/ is public and
+  // paginated, so `count` on a 1-result page is a real total at zero cost.
+  const { data: verifiedData } = useQuery({
+    queryKey: ["landing-verified-count"],
+    queryFn: () => apiClient.get(`${USERS.SEARCH}?verified=true&page_size=1`),
+    staleTime: 1000 * 60 * 5,
+    retry: 1,
+  });
+  const verifiedCount = verifiedData?.count ?? 0;
 
   // Already-signed-in users don't need the marketing page, unless they're
   // previewing it on purpose (QA/design checks) via ?preview=1.
@@ -172,57 +152,26 @@ export default function Landing() {
               through real project documentation. Turn every job site into a career asset.
             </p>
             <div className={styles.heroActions}>
-              <LinkButton to="/register" variant="accent" size="lg" className={styles.heroPrimaryBtn}>
+              <LinkButton
+                to={isAuthenticated ? "/feed" : "/register"}
+                variant="accent"
+                size="lg"
+                className={styles.heroPrimaryBtn}
+              >
                 Create Your Build Log <ArrowRight size={18} />
               </LinkButton>
               <LinkButton to="/register" variant="secondary" size="lg">
                 Explore Projects
               </LinkButton>
             </div>
-            <div className={styles.heroSocial}>
-              <div className={styles.avatarStack}>
-                <span className={styles.stackAvatar} />
-                <span className={styles.stackAvatar} />
-                <span className={styles.stackAvatar} />
+            {verifiedCount > 0 && (
+              <div className={styles.heroSocial}>
+                <p className={styles.heroSocialText}>
+                  <strong>{verifiedCount.toLocaleString()}</strong> Verified Professionals
+                  documenting
+                </p>
               </div>
-              <p className={styles.heroSocialText}>
-                <strong>2,500+</strong> Verified Professionals documenting
-              </p>
-            </div>
-          </div>
-
-          <div className={styles.heroCardWrap}>
-            <div className={styles.heroCard}>
-              <div className={styles.heroCardImage} aria-hidden="true" />
-              <div className={styles.heroCardBody}>
-                <div className={styles.heroCardHead}>
-                  <div>
-                    <h3 className={styles.heroCardTitle}>Skyline Residence Phase 1</h3>
-                    <p className={styles.heroCardMeta}>Nairobi, KE • Project ID: PW-9921</p>
-                  </div>
-                  <span className={styles.verifiedPill}>
-                    <CheckCircle2 size={12} /> Verified
-                  </span>
-                </div>
-                <div className={styles.heroCardFooter}>
-                  <FileText size={16} /> 14 Documentation Logs
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Social proof ────────────────────────────────────────────── */}
-      <section className={styles.trustStrip}>
-        <div className={styles.sectionInner}>
-          <p className={styles.trustLabel}>Trusted by industry leaders</p>
-          <div className={styles.trustLogos}>
-            {TRUST_LOGOS.map((logo) => (
-              <span key={logo} className={styles.trustLogo}>
-                {logo}
-              </span>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -262,82 +211,16 @@ export default function Landing() {
                 Explore high-fidelity proof-of-work from around the region.
               </p>
             </div>
-            <button type="button" className={styles.viewAllLink}>
+            <Link to="/search" className={styles.viewAllLink}>
               View All Projects <ExternalLink size={14} />
-            </button>
+            </Link>
           </div>
 
-          <div className={styles.bentoGrid}>
-            <div className={styles.bentoMain}>
-              <div className={styles.bentoPattern} aria-hidden="true" />
-              <div className={styles.bentoOverlay} />
-              <div className={styles.bentoContent}>
-                <div className={styles.bentoMeta}>
-                  <span className={styles.verifiedPillDark}>Verified Log</span>
-                  <span className={styles.bentoDate}>June 2026</span>
-                </div>
-                <h3 className={styles.bentoTitle}>The Nexus Tech Plaza</h3>
-                <p className={styles.bentoBody}>
-                  Advanced structural steel installation and smart glass integration. Documented
-                  through 42 verified build logs.
-                </p>
-              </div>
-            </div>
-            <div className={styles.bentoSide}>
-              <div className={styles.bentoSmall}>
-                <div className={styles.bentoPattern} aria-hidden="true" />
-                <div className={styles.bentoOverlay} />
-                <div className={styles.bentoSmallContent}>
-                  <h4 className={styles.bentoSmallTitle}>Oak Valley Lofts</h4>
-                  <p className={styles.bentoSmallMeta}>Interior Masterwork • Karen, Nairobi</p>
-                </div>
-              </div>
-              <div className={styles.bentoSmall}>
-                <div className={styles.bentoPattern} aria-hidden="true" />
-                <div className={styles.bentoOverlay} />
-                <div className={styles.bentoSmallContent}>
-                  <h4 className={styles.bentoSmallTitle}>Eco-Campus Courtyard</h4>
-                  <p className={styles.bentoSmallMeta}>Sustainable Design • Kiambu</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Featured professionals ──────────────────────────────────── */}
-      <section className={styles.section}>
-        <div className={styles.sectionInner}>
-          <div className={styles.sectionHead}>
-            <h2 className={styles.sectionTitle}>Elite Professionals</h2>
-            <p className={styles.sectionSubtitle}>
-              Meet the builders and designers who prove their work every day.
-            </p>
-          </div>
-          <div className={styles.proGrid}>
-            {PROFESSIONALS.map((pro) => (
-              <div key={pro.name} className={styles.proCard}>
-                <div className={styles.proAvatarWrap}>
-                  <div className={styles.proAvatar} />
-                  <span className={styles.proVerifiedDot}>
-                    <CheckCircle2 size={14} />
-                  </span>
-                </div>
-                <h3 className={styles.proName}>{pro.name}</h3>
-                <p className={styles.proRole}>{pro.role}</p>
-                <div className={styles.proTags}>
-                  {pro.tags.map((tag) => (
-                    <span key={tag} className={styles.proTag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <Link to="/register" className={styles.proBtn}>
-                  View Portfolio
-                </Link>
-              </div>
-            ))}
-          </div>
+          <ComingSoonCard
+            icon={LayoutGrid}
+            title="Coming Soon"
+            description="Real verified build logs from our professionals will appear here."
+          />
         </div>
       </section>
 
@@ -361,58 +244,6 @@ export default function Landing() {
                 ))}
               </div>
             </div>
-
-            <div className={styles.mockupFrame}>
-              <div className={styles.mockupInner}>
-                <div className={styles.mockupHead}>
-                  <div className={styles.mockupHeadLeft}>
-                    <div className={styles.mockupLogo}>PW</div>
-                    <div>
-                      <p className={styles.mockupTitle}>Build Log #442</p>
-                      <p className={styles.mockupSubtitle}>Foundation Pouring • 10:42 AM</p>
-                    </div>
-                  </div>
-                  <span className={styles.mockupLocation}>
-                    <MapPin size={12} /> Verified Location
-                  </span>
-                </div>
-                <div className={styles.mockupPattern} aria-hidden="true" />
-                <div className={styles.mockupLines}>
-                  <span className={styles.mockupLine} style={{ width: "100%" }} />
-                  <span className={styles.mockupLine} style={{ width: "75%" }} />
-                  <span className={styles.mockupLine} style={{ width: "50%" }} />
-                </div>
-                <div className={styles.mockupFooter}>
-                  <span className={styles.mockupApprove}>Approve Log</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Testimonials ────────────────────────────────────────────── */}
-      <section className={styles.section}>
-        <div className={styles.sectionInner}>
-          <h2 className={styles.sectionTitleCenter}>Heard from the Site</h2>
-          <div className={styles.testimonialGrid}>
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className={styles.testimonialCard}>
-                <div className={styles.stars}>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
-                  ))}
-                </div>
-                <p className={styles.testimonialQuote}>&ldquo;{t.quote}&rdquo;</p>
-                <div className={styles.testimonialAuthor}>
-                  <div className={styles.testimonialAvatar} />
-                  <div>
-                    <p className={styles.testimonialName}>{t.name}</p>
-                    <p className={styles.testimonialRole}>{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
