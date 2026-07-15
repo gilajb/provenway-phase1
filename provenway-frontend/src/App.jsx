@@ -25,6 +25,7 @@ import SearchPage from "./pages/main/SearchPage";
 import AuthLayout from "./components/layout/AuthLayout";
 import AppLayout from "./components/layout/AppLayout";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+import ScrollToTop from "./components/layout/ScrollToTop";
 
 import { useAuthStore } from "./stores/authStore";
 
@@ -36,35 +37,38 @@ export default function App() {
   }, []);
 
   return (
-    <Routes>
-      {/* ── Unauthenticated routes ────────────────────────────────────────── */}
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-      </Route>
-
-      {/* ── Authenticated routes ──────────────────────────────────────────── */}
-      <Route element={<ProtectedRoute />}>
-        <Route element={<AppLayout />}>
-          <Route path="/feed" element={<FeedPage />} />
-          <Route path="/profile/:id" element={<ProfilePage />} />
-          <Route path="/projects/:id" element={<ProjectPage />} />
-          <Route path="/search" element={<SearchPage />} />
+    <>
+      <ScrollToTop />
+      <Routes>
+        {/* ── Unauthenticated routes ──────────────────────────────────────── */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
-      </Route>
 
-      {/* ── Public marketing pages ───────────────────────────────────────── */}
-      <Route path="/" element={<Landing />} />
-      <Route path="/for-professionals" element={<ForProfessionals />} />
-      <Route path="/for-construction-firms" element={<ForConstructionFirms />} />
-      <Route path="/for-architects" element={<ForArchitects />} />
-      <Route path="/educational-access" element={<EducationalAccess />} />
+        {/* ── Authenticated routes ────────────────────────────────────────── */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route path="/projects/:id" element={<ProjectPage />} />
+            <Route path="/search" element={<SearchPage />} />
+          </Route>
+        </Route>
 
-      {/* ── Default redirect ──────────────────────────────────────────────── */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        {/* ── Public marketing pages ─────────────────────────────────────── */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/for-professionals" element={<ForProfessionals />} />
+        <Route path="/for-construction-firms" element={<ForConstructionFirms />} />
+        <Route path="/for-architects" element={<ForArchitects />} />
+        <Route path="/educational-access" element={<EducationalAccess />} />
+
+        {/* ── Default redirect ────────────────────────────────────────────── */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }

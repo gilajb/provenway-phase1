@@ -257,7 +257,9 @@
 }
 
 /* ── Benefits ─────────────────────────────────────────────────────── */
-#solutions {
+/* :global — CSS Modules scopes bare ID selectors too, which would
+   otherwise never match the real id="solutions" element in the DOM. */
+:global(#solutions) {
   scroll-margin-top: 96px;
 }
 

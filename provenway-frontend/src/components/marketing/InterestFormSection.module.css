@@ -1,4 +1,6 @@
-#interest-form {
+/* :global — CSS Modules scopes bare ID selectors too, which would
+   otherwise never match the real id="interest-form" element in the DOM. */
+:global(#interest-form) {
   scroll-margin-top: 96px;
 }
 
