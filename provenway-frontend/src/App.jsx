@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// Marketing page
+// Marketing pages
 import Landing from "./pages/Landing";
+import ForProfessionals from "./pages/marketing/ForProfessionals";
+import ForConstructionFirms from "./pages/marketing/ForConstructionFirms";
+import ForArchitects from "./pages/marketing/ForArchitects";
+import EducationalAccess from "./pages/marketing/EducationalAccess";
 
 // Auth pages
 import Login from "./pages/auth/Login";
@@ -52,8 +56,12 @@ export default function App() {
         </Route>
       </Route>
 
-      {/* ── Public marketing page ────────────────────────────────────────── */}
+      {/* ── Public marketing pages ───────────────────────────────────────── */}
       <Route path="/" element={<Landing />} />
+      <Route path="/for-professionals" element={<ForProfessionals />} />
+      <Route path="/for-construction-firms" element={<ForConstructionFirms />} />
+      <Route path="/for-architects" element={<ForArchitects />} />
+      <Route path="/educational-access" element={<EducationalAccess />} />
 
       {/* ── Default redirect ──────────────────────────────────────────────── */}
       <Route path="*" element={<Navigate to="/" replace />} />

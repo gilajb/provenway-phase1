@@ -1,11 +1,9 @@
 /**
- * src/pages/Landing.module.css
- * ──────────────────────────────
- * Styles for the public marketing landing page.
- * Uses tokens.css exclusively — no hard-coded colors.
- * Breakpoints: mobile <640px · tablet 640–1024px · desktop >1024px
+ * src/components/marketing/AudiencePageLayout.module.css
+ * Visual language mirrors Landing.module.css (hero/section/benefits/
+ * final-CTA rules) so the 4 audience pages read as one system with the
+ * main Landing page. tokens.css exclusively — no hard-coded values.
  */
-
 .page {
   width: 100%;
   overflow-x: hidden;
@@ -53,10 +51,6 @@
 .heroInner {
   max-width: var(--grid-max-width);
   margin-inline: auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-xl);
-  align-items: center;
 }
 
 .eyebrow {
@@ -79,6 +73,7 @@
   letter-spacing: var(--letter-spacing-display-lg);
   color: var(--color-primary);
   margin-bottom: var(--space-sm);
+  max-width: 40rem;
 }
 
 @media (max-width: 640px) {
@@ -104,7 +99,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
-  margin-bottom: var(--space-md);
 }
 
 @media (min-width: 480px) {
@@ -115,20 +109,6 @@
 
 .heroPrimaryBtn {
   gap: var(--space-xs);
-}
-
-.heroSocial {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
-
-.heroSocialText {
-  font-size: var(--font-size-label-md);
-  color: var(--color-on-surface-variant);
-}
-.heroSocialText strong {
-  color: var(--color-primary);
 }
 
 /* ── Generic sections ─────────────────────────────────────────────── */
@@ -159,125 +139,27 @@
   color: var(--color-on-surface-variant);
 }
 
-.sectionSubtitleTight {
-  font-size: var(--font-size-body-md);
-  color: var(--color-on-surface-variant);
-}
-
-.rowHead {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-lg);
-}
-
-@media (min-width: 768px) {
-  .rowHead {
-    flex-direction: row;
-    align-items: flex-end;
-  }
-}
-
-.viewAllLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  color: var(--color-primary);
-  font-size: var(--font-size-label-md);
-  font-weight: var(--font-weight-label-md);
-  background: transparent;
-  flex-shrink: 0;
-}
-.viewAllLink:hover {
-  text-decoration: underline;
-}
-
-/* ── Steps ────────────────────────────────────────────────────────── */
-.stepsGrid {
+/* ── Value props ──────────────────────────────────────────────────── */
+.valuePropsGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-lg);
-}
-
-@media (min-width: 768px) {
-  .stepsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.stepCard {
-  text-align: center;
-}
-
-.stepIconWrap {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  margin: 0 auto var(--space-sm);
-  border-radius: var(--radius-lg);
-  background: var(--color-primary-fixed);
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--transition-base);
-}
-.stepCard:hover .stepIconWrap {
-  transform: scale(1.08);
-}
-
-.stepNumber {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-full);
-  background: var(--color-accent);
-  color: var(--color-on-accent);
-  font-size: 11px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stepTitle {
-  font-size: var(--font-size-headline-sm);
-  font-weight: var(--font-weight-headline-sm);
-  color: var(--color-primary);
-  margin-bottom: var(--space-xs);
-}
-
-.stepBody {
-  font-size: var(--font-size-body-md);
-  color: var(--color-on-surface-variant);
-}
-
-/* ── Benefits ─────────────────────────────────────────────────────── */
-#solutions {
-  scroll-margin-top: 96px;
-}
-
-.benefitsGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-xl);
-  align-items: center;
-}
-
-.benefitsList {
-  margin-top: var(--space-md);
-  display: flex;
-  flex-direction: column;
   gap: var(--space-md);
 }
 
-.benefitRow {
+@media (min-width: 768px) {
+  .valuePropsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.valuePropCard {
   display: flex;
   gap: var(--space-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-level-1);
 }
 
 .benefitIconWrap {
@@ -303,7 +185,6 @@
   font-size: var(--font-size-body-md);
   color: var(--color-on-surface-variant);
 }
-
 
 /* ── Final CTA ────────────────────────────────────────────────────── */
 .finalCtaSection {
@@ -402,5 +283,5 @@
 .finalCtaGhostBtn:hover {
   background: rgba(255, 255, 255, 0.2) !important;
   color: var(--color-on-primary) !important;
+  text-decoration: none;
 }
-

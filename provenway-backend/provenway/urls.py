@@ -35,6 +35,9 @@ urlpatterns = [
     # <uuid:user_id>/... patterns above.
     path(f"{API_V1}users/", include("apps.profiles.directory_urls")),
     path(f"{API_V1}feed/", include("apps.feed.urls")),
+    # apps.leads — public lead capture for marketing pages whose product
+    # area (firms, institutions) has no self-serve account flow yet.
+    path(f"{API_V1}leads/", include("apps.leads.urls")),
     # Additional app URLs are uncommented as each app is scaffolded:
     # NOTE: Project CRUD lives in apps.projects; ProjectUpdate/UpdatePhoto
     # now live in apps.build_log (wired in above) as originally planned.

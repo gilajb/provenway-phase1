@@ -19,23 +19,16 @@ import {
   TrendingUp,
   Users,
   ExternalLink,
-  Globe,
-  Share2,
 } from "lucide-react";
 import Button from "../components/ui/Button";
 import LinkButton from "../components/ui/LinkButton";
 import ComingSoonCard from "../components/profile/ComingSoonCard";
+import PublicNav from "../components/marketing/PublicNav";
+import PublicFooter from "../components/marketing/PublicFooter";
 import { useAuth } from "../hooks/useAuth";
 import { apiClient } from "../lib/api/apiClient";
 import { USERS } from "../lib/api/endpoints";
 import styles from "./Landing.module.css";
-
-const NAV_LINKS = [
-  { label: "Explore", href: "#" },
-  { label: "Solutions", href: "#solutions" },
-  { label: "Firms", href: "#" },
-  { label: "Pricing", href: "#" },
-];
 
 const STEPS = [
   {
@@ -76,25 +69,6 @@ const BENEFITS = [
   },
 ];
 
-const FOOTER_COLUMNS = [
-  {
-    heading: "Product",
-    links: ["Build Logs", "Verification Hub", "Portfolio Designer", "Integrations"],
-  },
-  {
-    heading: "Solutions",
-    links: ["For Professionals", "For Construction Firms", "For Architects", "Educational Access"],
-  },
-  {
-    heading: "Company",
-    links: ["About Us", "Careers", "Verification Standards", "Contact"],
-  },
-  {
-    heading: "Resources",
-    links: ["Case Studies", "Industry Reports", "Blog", "Support Center"],
-  },
-];
-
 export default function Landing() {
   const { isAuthenticated, isHydrating } = useAuth();
   const [searchParams] = useSearchParams();
@@ -118,29 +92,7 @@ export default function Landing() {
 
   return (
     <div className={styles.page}>
-      {/* ── Nav ─────────────────────────────────────────────────────── */}
-      <nav className={styles.nav}>
-        <div className={styles.navInner}>
-          <div className={styles.navLeft}>
-            <span className={styles.brand}>Provenway</span>
-            <div className={styles.navLinks}>
-              {NAV_LINKS.map(({ label, href }, i) => (
-                <a key={label} href={href} className={i === 0 ? styles.navLinkActive : styles.navLink}>
-                  {label}
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className={styles.navRight}>
-            <Link to="/login" className={styles.signInLink}>
-              Sign In
-            </Link>
-            <LinkButton to="/register" variant="primary" size="md">
-              Sign Up
-            </LinkButton>
-          </div>
-        </div>
-      </nav>
+      <PublicNav />
 
       {/* ── Hero ────────────────────────────────────────────────────── */}
       <section className={styles.hero}>
@@ -293,58 +245,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── Footer ───────────────────────────────────────────────────── */}
-      <footer className={styles.footer}>
-        <div className={styles.sectionInner}>
-          <div className={styles.footerGrid}>
-            <div className={styles.footerBrandCol}>
-              <span className={styles.footerBrand}>Provenway</span>
-              <p className={styles.footerTagline}>
-                The construction industry&apos;s standard for verified documentation and
-                professional portfolios.
-              </p>
-              <div className={styles.footerSocial}>
-                <a href="#" className={styles.footerSocialIcon} aria-label="Website">
-                  <Globe size={16} />
-                </a>
-                <a href="#" className={styles.footerSocialIcon} aria-label="Share">
-                  <Share2 size={16} />
-                </a>
-              </div>
-            </div>
-
-            {FOOTER_COLUMNS.map((col) => (
-              <div key={col.heading}>
-                <h5 className={styles.footerHeading}>{col.heading}</h5>
-                <ul className={styles.footerLinks}>
-                  {col.links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className={styles.footerLink}>
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className={styles.footerBottom}>
-            <p className={styles.footerCopyright}>© 2026 Provenway. All rights reserved.</p>
-            <div className={styles.footerLegal}>
-              <a href="#" className={styles.footerLegalLink}>
-                Privacy Policy
-              </a>
-              <a href="#" className={styles.footerLegalLink}>
-                Terms of Service
-              </a>
-              <a href="#" className={styles.footerLegalLink}>
-                Trust &amp; Security
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }

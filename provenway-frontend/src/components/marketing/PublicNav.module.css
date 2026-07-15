@@ -1,0 +1,100 @@
+/**
+ * src/components/marketing/PublicNav.module.css
+ * Extracted from Landing.module.css's nav rules — see that file's header
+ * comment for the token/breakpoint conventions this follows.
+ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-navbar);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-navbar);
+}
+
+.navInner {
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding: var(--space-sm) var(--space-margin);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 640px) {
+  .navInner {
+    padding: var(--space-xs) var(--space-sm);
+  }
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.brand {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-headline-md);
+  font-weight: var(--font-weight-headline-md);
+  color: var(--color-primary);
+}
+
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .navLinks {
+    display: flex;
+  }
+}
+
+.navLink {
+  font-size: var(--font-size-body-md);
+  color: var(--color-on-surface-variant);
+  transition: color var(--transition-fast);
+}
+.navLink:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.navLinkActive {
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 2px;
+}
+.navLinkActive:hover {
+  text-decoration: none;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.signInLink {
+  display: none;
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-on-surface-variant);
+}
+.signInLink:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+@media (min-width: 480px) {
+  .signInLink {
+    display: inline-block;
+  }
+}

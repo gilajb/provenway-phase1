@@ -105,6 +105,12 @@ export const SEARCH = {
   ALL: "/search/",
 };
 
+// apps/leads — public lead capture for marketing pages whose product
+// area (firms, institutions) has no self-serve account flow yet.
+export const LEADS = {
+  INTEREST: "/leads/interest/",
+};
+
 export const WEBSOCKET = {
   chat:          (conversationId) =>
     `${import.meta.env.VITE_API_URL?.replace("http", "ws")?.replace("/api/v1", "")}/ws/chat/${conversationId}/`,

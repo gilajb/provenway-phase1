@@ -44,6 +44,7 @@ LOCAL_APPS = [
     "apps.build_log",
     "apps.networking",
     "apps.feed",
+    "apps.leads",
     # Uncomment each app only after it is fully scaffolded:
     # "apps.recruitment",
     # "apps.tenders",
