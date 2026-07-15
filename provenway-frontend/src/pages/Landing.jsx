@@ -224,6 +224,24 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── Featured professionals ──────────────────────────────────── */}
+      <section className={styles.section}>
+        <div className={styles.sectionInner}>
+          <div className={styles.sectionHead}>
+            <h2 className={styles.sectionTitle}>Elite Professionals</h2>
+            <p className={styles.sectionSubtitle}>
+              Meet the builders and designers who prove their work every day.
+            </p>
+          </div>
+
+          <ComingSoonCard
+            icon={Users}
+            title="Coming Soon"
+            description="Verified professionals on Provenway will appear here."
+          />
+        </div>
+      </section>
+
       {/* ── Benefits ─────────────────────────────────────────────────── */}
       <section className={styles.sectionAlt}>
         <div className={styles.sectionInner}>
