@@ -354,6 +354,10 @@
 }
 
 /* ── Benefits ─────────────────────────────────────────────────────── */
+#solutions {
+  scroll-margin-top: 96px;
+}
+
 .benefitsGrid {
   display: grid;
   grid-template-columns: 1fr;

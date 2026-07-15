@@ -30,7 +30,12 @@ import { apiClient } from "../lib/api/apiClient";
 import { USERS } from "../lib/api/endpoints";
 import styles from "./Landing.module.css";
 
-const NAV_LINKS = ["Explore", "Solutions", "Firms", "Pricing"];
+const NAV_LINKS = [
+  { label: "Explore", href: "#" },
+  { label: "Solutions", href: "#solutions" },
+  { label: "Firms", href: "#" },
+  { label: "Pricing", href: "#" },
+];
 
 const STEPS = [
   {
@@ -119,8 +124,8 @@ export default function Landing() {
           <div className={styles.navLeft}>
             <span className={styles.brand}>Provenway</span>
             <div className={styles.navLinks}>
-              {NAV_LINKS.map((label, i) => (
-                <a key={label} href="#" className={i === 0 ? styles.navLinkActive : styles.navLink}>
+              {NAV_LINKS.map(({ label, href }, i) => (
+                <a key={label} href={href} className={i === 0 ? styles.navLinkActive : styles.navLink}>
                   {label}
                 </a>
               ))}
@@ -243,7 +248,7 @@ export default function Landing() {
       </section>
 
       {/* ── Benefits ─────────────────────────────────────────────────── */}
-      <section className={styles.sectionAlt}>
+      <section id="solutions" className={styles.sectionAlt}>
         <div className={styles.sectionInner}>
           <div className={styles.benefitsGrid}>
             <div>
