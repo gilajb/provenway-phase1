@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.conf import settings
 from django.utils import timezone
 from rest_framework import status
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -122,14 +122,6 @@ class LoginView(APIView):
             raise ValidationError(serializer.errors)
 
         user = serializer.validated_data["user"]
-
-        if not user.is_email_verified:
-            _log_event(request, user, AuthAuditLog.EventType.LOGIN_FAILED,
-                       metadata={"reason": "email_not_verified"})
-            # 403, not 400 — credentials were correct. Lets the frontend
-            # special-case this (e.g. offer to resend the verification
-            # email) instead of showing a generic "bad login" message.
-            raise PermissionDenied("Please verify your email address before signing in.")
 
         tokens = _issue_tokens_for_user(user)
         _log_event(request, user, AuthAuditLog.EventType.LOGIN_SUCCESS)

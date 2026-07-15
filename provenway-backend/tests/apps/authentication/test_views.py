@@ -87,14 +87,17 @@ class TestLoginAndMe:
         assert response.data["avatar_url"] == "https://example.com/a.png"
         assert response.data["disciplines"] == []
 
-    def test_unverified_email_login_returns_403(self, api_client):
+    def test_unverified_email_can_still_login(self, api_client):
+        # Email verification enforcement is disabled until Resend is wired
+        # up — registering doesn't yet result in a deliverable email, so
+        # gating login on it would lock out every real user.
         _make_user(email="unverified@example.com", is_email_verified=False)
         response = api_client.post(
             reverse("authentication:login"),
             {"email": "unverified@example.com", "password": "StrongPass1"},
             format="json",
         )
-        assert response.status_code == 403
+        assert response.status_code == 200
 
 
 @pytest.mark.django_db

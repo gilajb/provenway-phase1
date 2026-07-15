@@ -152,8 +152,12 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,
     "ALGORITHM": os.environ.get("JWT_ALGORITHM", "HS256"),
-    "SIGNING_KEY": os.environ.get("JWT_SIGNING_KEY", SECRET_KEY),
-    "VERIFYING_KEY": os.environ.get("JWT_VERIFYING_KEY", None),
+    # `.get(key, default)` only falls back when the var is absent, not when
+    # it's present-but-empty — and .env ships JWT_SIGNING_KEY/JWT_VERIFYING_KEY
+    # blank on purpose (HS256 dev mode signs with DJANGO_SECRET_KEY instead).
+    # `or` treats "" the same as unset so that fallback actually applies.
+    "SIGNING_KEY": os.environ.get("JWT_SIGNING_KEY") or SECRET_KEY,
+    "VERIFYING_KEY": os.environ.get("JWT_VERIFYING_KEY") or None,
     "AUTH_HEADER_TYPES": ("Bearer",),
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",

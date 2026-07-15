@@ -6,7 +6,7 @@
  */
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AlertCircle, MailWarning } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
@@ -24,10 +24,6 @@ export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [fieldErrors, setFieldErrors] = useState({});
   const [formError, setFormError] = useState(null);
-  // True only when the API rejected login specifically because the
-  // account's email isn't verified yet (backend returns 403 for this,
-  // vs 400 for bad credentials) — lets us show a different action.
-  const [unverified, setUnverified] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function updateField(field, value) {
@@ -47,7 +43,6 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError(null);
-    setUnverified(false);
     if (!validate()) return;
 
     setLoading(true);
@@ -55,12 +50,8 @@ export default function Login() {
       await login(form.email.trim(), form.password);
       navigate(from, { replace: true });
     } catch (err) {
-      if (err.status === 403) {
-        setUnverified(true);
-      } else {
-        setFieldErrors((f) => ({ ...f, ...getFieldErrors(err) }));
-        setFormError(getErrorMessage(err));
-      }
+      setFieldErrors((f) => ({ ...f, ...getFieldErrors(err) }));
+      setFormError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -77,16 +68,6 @@ export default function Login() {
         <div className={styles.errorBanner} role="alert">
           <AlertCircle size={16} />
           <span>{formError}</span>
-        </div>
-      )}
-
-      {unverified && (
-        <div className={styles.errorBanner} role="alert">
-          <MailWarning size={16} />
-          <span>
-            Please verify your email before signing in. Check the inbox for{" "}
-            <strong>{form.email.trim()}</strong> for the link we sent when you registered.
-          </span>
         </div>
       )}
 
@@ -121,15 +102,9 @@ export default function Login() {
         </Button>
       </form>
 
-      {unverified ? (
-        <p className={styles.linksRow}>
-          Wrong inbox? <Link to="/register">Register again</Link>
-        </p>
-      ) : (
-        <p className={styles.linksRow}>
-          Don&apos;t have an account? <Link to="/register">Create one</Link>
-        </p>
-      )}
+      <p className={styles.linksRow}>
+        Don&apos;t have an account? <Link to="/register">Create one</Link>
+      </p>
     </>
   );
 }
