@@ -6,9 +6,9 @@
  *
  * Static/marketing content only — no backend calls. All CTAs route to
  * /register or /login via React Router. Already-authenticated users are
- * bounced straight to /feed.
+ * bounced straight to /feed, unless ?preview=1 is present (QA/design checks).
  */
-import { Navigate, Link } from "react-router-dom";
+import { Navigate, Link, useSearchParams } from "react-router-dom";
 import {
   ArrowRight,
   Camera,
@@ -122,9 +122,12 @@ const TRUST_LOGOS = ["STRUCTURA", "ARC-WEST", "BUILD-PRO", "MERIDIAN", "VANGUARD
 
 export default function Landing() {
   const { isAuthenticated, isHydrating } = useAuth();
+  const [searchParams] = useSearchParams();
+  const isPreview = searchParams.get("preview") === "1";
 
-  // Already-signed-in users don't need the marketing page.
-  if (!isHydrating && isAuthenticated) {
+  // Already-signed-in users don't need the marketing page, unless they're
+  // previewing it on purpose (QA/design checks) via ?preview=1.
+  if (!isHydrating && isAuthenticated && !isPreview) {
     return <Navigate to="/feed" replace />;
   }
 
