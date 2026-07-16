@@ -18,3 +18,5 @@ cloudinary==1.41.0
 bleach==6.4.0
 bcrypt==5.0.0
 cryptography==49.0.0
+reportlab==4.2.5
+qrcode==8.0

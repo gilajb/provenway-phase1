@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.downloadLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  height: 32px;
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-default);
+  background: var(--color-success-container);
+  color: var(--color-success);
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-label-md);
+  text-decoration: none;
+}
+.downloadLink:hover {
+  text-decoration: underline;
+}
+
+.errorText {
+  font-size: var(--font-size-label-sm);
+  color: var(--color-error);
+}
+
+.spinner {
+  animation: export-spin 0.8s linear infinite;
+}
+
+@keyframes export-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -13,7 +13,7 @@ import styles from "./PublicFooter.module.css";
 const FOOTER_COLUMNS = [
   {
     heading: "Product",
-    links: ["Build Logs", "Verification Hub", "Portfolio Designer", "Integrations"],
+    links: ["Build Logs", "Verification Hub", "PDF Portfolio Export"],
   },
   {
     heading: "Solutions",

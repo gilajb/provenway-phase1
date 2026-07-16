@@ -10,6 +10,8 @@ apps.profiles' version so apps/build_log doesn't reach into another app's
 internals for something this small.
 """
 
+import io
+
 import cloudinary
 import cloudinary.uploader
 from django.conf import settings
@@ -58,4 +60,29 @@ def upload_update_photo(file_obj, update_id: str, sequence_order: int) -> dict:
     secure_url = result.get("secure_url")
     if not secure_url:
         raise CloudinaryUploadError("Cloudinary did not return a URL for the uploaded photo.")
+    return {"public_id": result.get("public_id"), "secure_url": secure_url}
+
+
+def upload_export_pdf(pdf_bytes: bytes, project_id: str) -> dict:
+    """Upload a generated portfolio PDF to Cloudinary. First `resource_type
+    ="raw"` upload in the codebase — every other upload here is an image.
+    `overwrite=True` since only the latest export needs to persist.
+
+    Returns {"public_id": ..., "secure_url": ...}.
+    """
+    _ensure_configured()
+    try:
+        result = cloudinary.uploader.upload(
+            io.BytesIO(pdf_bytes),
+            folder="provenway/exports",
+            public_id=f"project_{project_id}_export",
+            overwrite=True,
+            resource_type="raw",
+        )
+    except Exception as exc:
+        raise CloudinaryUploadError(f"PDF export upload failed: {exc}") from exc
+
+    secure_url = result.get("secure_url")
+    if not secure_url:
+        raise CloudinaryUploadError("Cloudinary did not return a URL for the uploaded PDF.")
     return {"public_id": result.get("public_id"), "secure_url": secure_url}

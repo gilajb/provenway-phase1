@@ -8,6 +8,8 @@ and has a urlpatterns list.
 from django.contrib import admin
 from django.urls import include, path
 
+from apps.build_log.views import ProjectExportStatusView
+
 API_V1 = "api/v1/"
 
 urlpatterns = [
@@ -38,6 +40,13 @@ urlpatterns = [
     # apps.leads — public lead capture for marketing pages whose product
     # area (firms, institutions) has no self-serve account flow yet.
     path(f"{API_V1}leads/", include("apps.leads.urls")),
+    # Flat /tasks/{id}/ per Engineering Doc §5.2 — the only async-job
+    # producer right now is apps.build_log's PDF export, so this imports
+    # that view directly rather than standing up a dedicated tasks app.
+    # If a second job producer shows up, promote this to a real
+    # apps/tasks app instead of importing across app boundaries again.
+    path(f"{API_V1}tasks/<str:task_id>/", ProjectExportStatusView.as_view(), name="task-status"),
+    path(f"{API_V1}credentials/", include("apps.verification.urls")),
     # Additional app URLs are uncommented as each app is scaffolded:
     # NOTE: Project CRUD lives in apps.projects; ProjectUpdate/UpdatePhoto
     # now live in apps.build_log (wired in above) as originally planned.
@@ -46,7 +55,6 @@ urlpatterns = [
     # path(f"{API_V1}tenders/", include("apps.tenders.urls")),
     # path(f"{API_V1}conversations/", include("apps.messaging.urls")),
     # path(f"{API_V1}notifications/", include("apps.notifications.urls")),
-    # path(f"{API_V1}credentials/", include("apps.verification.urls")),
     # path(f"{API_V1}organisations/", include("apps.organisations.urls")),
     # path(f"{API_V1}billing/", include("apps.billing.urls")),
     # path(f"{API_V1}search/", include("apps.search.urls")),

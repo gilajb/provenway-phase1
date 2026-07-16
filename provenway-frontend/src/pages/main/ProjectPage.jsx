@@ -39,6 +39,7 @@ import ProjectOverviewCard from "../../components/project/ProjectOverviewCard";
 import UpdateTimeline from "../../components/project/UpdateTimeline";
 import EditProjectModal from "../../components/project/EditProjectModal";
 import AddUpdateModal from "../../components/project/AddUpdateModal";
+import ExportPdfButton from "../../components/project/ExportPdfButton";
 
 import styles from "./ProjectPage.module.css";
 
@@ -119,6 +120,7 @@ export default function ProjectPage() {
             <Trash2 size={14} />
             Delete
           </Button>
+          <ExportPdfButton projectId={id} />
         </div>
       )}
 

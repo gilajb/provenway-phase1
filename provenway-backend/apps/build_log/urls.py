@@ -20,4 +20,9 @@ urlpatterns = [
         views.UpdatePhotoUploadView.as_view(),
         name="update-photo-upload",
     ),
+    path(
+        "<uuid:project_id>/export-pdf/",
+        views.ProjectExportView.as_view(),
+        name="export-pdf",
+    ),
 ]

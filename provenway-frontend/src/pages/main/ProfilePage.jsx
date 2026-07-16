@@ -22,7 +22,7 @@
  * serializer differs.
  */
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   MapPin,
   Building2,
@@ -31,6 +31,7 @@ import {
   Layers,
   History,
   AlertCircle,
+  ShieldCheck,
 } from "lucide-react";
 
 import { useProfile } from "../../hooks/useProfile";
@@ -120,6 +121,13 @@ export default function ProfilePage() {
                   Edit profile
                 </span>
               </Button>
+            )}
+
+            {isOwnProfile && !isVerified && (
+              <Link to="/verification" className={styles.getVerifiedLink}>
+                <ShieldCheck size={14} />
+                Get verified
+              </Link>
             )}
 
             <div className={styles.metaList}>

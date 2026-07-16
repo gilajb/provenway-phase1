@@ -70,6 +70,20 @@
   gap: 6px;
 }
 
+.getVerifiedLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-label-md);
+  color: var(--color-secondary);
+}
+.getVerifiedLink:hover {
+  text-decoration: underline;
+}
+
 .metaList {
   width: 100%;
   display: flex;

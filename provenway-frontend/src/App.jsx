@@ -20,6 +20,7 @@ import FeedPage from "./pages/main/FeedPage";
 import ProfilePage from "./pages/main/ProfilePage";
 import ProjectPage from "./pages/main/ProjectPage";
 import SearchPage from "./pages/main/SearchPage";
+import VerificationPage from "./pages/main/VerificationPage";
 
 // Layout wrappers
 import AuthLayout from "./components/layout/AuthLayout";
@@ -56,6 +57,7 @@ export default function App() {
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/projects/:id" element={<ProjectPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/verification" element={<VerificationPage />} />
           </Route>
         </Route>
 

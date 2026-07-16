@@ -1,3 +1,4 @@
+from celery.result import AsyncResult
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -21,6 +22,7 @@ from .serializers import (
 )
 from .service.cloudinary_service import CloudinaryUploadError, upload_update_photo
 from .service.exif_service import extract_exif
+from .tasks import generate_project_pdf_task
 
 
 def _get_visible_project(request, project_id):
@@ -172,3 +174,53 @@ class UpdatePhotoUploadView(APIView):
             UpdatePhotoSerializer(created_photos, many=True).data,
             status=status.HTTP_201_CREATED,
         )
+
+
+class ProjectExportView(APIView):
+    """POST /api/v1/projects/{project_id}/export-pdf/ — project owner only.
+    Kicks off async PDF generation (apps.build_log.tasks.
+    generate_project_pdf_task) and returns the Celery task_id for polling
+    via ProjectExportStatusView / GET /api/v1/tasks/{task_id}/.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, project_id):
+        enforce_rate_limit(request, group="project_export", rate="5/h")
+        project = _get_visible_project(request, project_id)
+        if project.owner_id != request.user.id:
+            raise PermissionDenied("Only the project owner can export this build log.")
+
+        task = generate_project_pdf_task.delay(str(project.id))
+        return Response({"task_id": task.id}, status=status.HTTP_202_ACCEPTED)
+
+
+class ProjectExportStatusView(APIView):
+    """GET /api/v1/tasks/{task_id}/ — poll a PDF export job's status.
+
+    No DB row links a task_id to a user/project (see build plan's noted
+    tradeoff for this feature), so this can only require *some*
+    authenticated user, not verify the requester started this specific
+    job — the task_id itself (an unguessable Celery UUID4) is the
+    practical protection here.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, task_id):
+        # Imported here (not at module load) because provenway.celery_app
+        # must not be imported before Django's app registry is ready —
+        # see core/apps.py:ready() for the same Windows-safe reasoning.
+        # (AsyncResult itself has no such constraint — it's imported at
+        # module level above.)
+        from provenway.celery_app import app as celery_app
+
+        result = AsyncResult(task_id, app=celery_app)
+
+        if result.state in ("PENDING", "STARTED", "RETRY"):
+            return Response({"status": "processing"})
+        if result.state == "SUCCESS":
+            return Response({"status": "completed", "pdf_url": result.result["pdf_url"]})
+        if result.state == "FAILURE":
+            return Response({"status": "failed", "error": "Export failed. Please try again."})
+        return Response({"status": "processing"})

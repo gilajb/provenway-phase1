@@ -45,13 +45,13 @@ LOCAL_APPS = [
     "apps.networking",
     "apps.feed",
     "apps.leads",
+    "apps.verification",
     # Uncomment each app only after it is fully scaffolded:
     # "apps.recruitment",
     # "apps.tenders",
     # "apps.organisations",
     # "apps.messaging",
     # "apps.notifications",
-    # "apps.verification",
     # "apps.search",
     # "apps.billing",
     # "apps.admin_panel",
@@ -177,6 +177,11 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_DEFAULT_QUEUE = "default"
 CELERY_TASK_ROUTES = {
     "apps.authentication.tasks.*": {"queue": "email"},
+    # PDF portfolio export — kept on its own queue since it's a heavier,
+    # slower job (photo downloads + PDF render + Cloudinary upload) than
+    # the fire-and-forget email tasks; a worker must listen on this queue
+    # explicitly: `celery -A provenway.celery_app worker -Q email,exports`.
+    "apps.build_log.tasks.*": {"queue": "exports"},
 }
 
 CHANNEL_LAYERS = {
