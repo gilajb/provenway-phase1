@@ -22,6 +22,18 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { apiClient } from "../lib/api/apiClient";
 import { AUTH } from "../lib/api/endpoints";
 
+// Single-flight guard for refreshAccessToken (module-level, not store
+// state — it's plumbing, not app state). Without this, two concurrent
+// callers (e.g. React StrictMode double-invoking App.jsx's hydrate()
+// effect in dev) both read the same refreshToken and both call
+// /auth/token/refresh/ with it. The backend rotates + blacklists on
+// every refresh (ROTATE_REFRESH_TOKENS/BLACKLIST_AFTER_ROTATION), so
+// the first call succeeds and the second necessarily 401s on the
+// now-blacklisted token — and its catch block used to unconditionally
+// clear the whole session, silently logging out a user who had just
+// successfully authenticated seconds earlier.
+let refreshPromise = null;
+
 export const useAuthStore = create(
   persist(
     (set, get) => ({
@@ -65,17 +77,25 @@ export const useAuthStore = create(
       },
 
       async refreshAccessToken() {
+        if (refreshPromise) return refreshPromise;
+
         const { refreshToken } = get();
         if (!refreshToken) return null;
 
-        try {
-          const data = await apiClient.post(AUTH.TOKEN_REFRESH, { refresh: refreshToken });
-          set({ accessToken: data.access, refreshToken: data.refresh ?? refreshToken });
-          return data.access;
-        } catch {
-          set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false });
-          return null;
-        }
+        refreshPromise = (async () => {
+          try {
+            const data = await apiClient.post(AUTH.TOKEN_REFRESH, { refresh: refreshToken });
+            set({ accessToken: data.access, refreshToken: data.refresh ?? refreshToken });
+            return data.access;
+          } catch {
+            set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false });
+            return null;
+          } finally {
+            refreshPromise = null;
+          }
+        })();
+
+        return refreshPromise;
       },
 
       async fetchCurrentUser() {
